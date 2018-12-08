@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  apache:
+    image: 'httpd:2.4'
+    container_name: apache
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - './public:/usr/local/apache2/htdocs/'
+      #如果你要使用虚拟主机，请注释下一行，并创建好对应的my-vhosts.conf
+      - './my_vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf'
+      #如果你要自定义apache配置，请注释下一行。
+      #- './my-httpd.conf /usr/local/apache2/conf/httpd.conf'
