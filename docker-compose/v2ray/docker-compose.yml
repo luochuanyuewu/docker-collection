@@ -6,5 +6,5 @@
       - ./etc:/etc/v2ray
       - ./log/v2ray:/var/log/v2ray
     ports:
-      - 10086:10086
+      - 55520:55520
     command: ["v2ray", "-config=/etc/v2ray/config.json"]
