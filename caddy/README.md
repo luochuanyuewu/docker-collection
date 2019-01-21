@@ -12,9 +12,19 @@ docker run -d \
 --name sites  \
 -v $HOME/.caddy:/root/.caddy \
 -v $(pwd)/Caddyfile/:/etc/Caddyfile \
--v $(pwd):/srv \
--p 80:2015 \
+-v $(pwd)/aliblog:/srv \
+-p 80:80 \
+-p 443:443 \
+-p 2015:2015 \
 abiosoft/caddy
+```
+
+root的值其实时相对于DocumentRoot的。
+> root /aliblog 对应的是/srv/aliblog
+```
+luochuanyuewu.com {
+    root /srv/aliblog
+}
 ```
 
 第一个v是映射证书文件夹
