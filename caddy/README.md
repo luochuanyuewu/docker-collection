@@ -12,25 +12,35 @@ docker run -d \
 --name sites  \
 -v $HOME/.caddy:/root/.caddy \
 -v $(pwd)/Caddyfile/:/etc/Caddyfile \
--v $(pwd)/aliblog:/srv \
+-v $(pwd):/srv \
 -p 80:80 \
 -p 443:443 \
 -p 2015:2015 \
 abiosoft/caddy
 ```
-
-root的值其实时相对于DocumentRoot的。
-> root /aliblog 对应的是/srv/aliblog
-```
-luochuanyuewu.com {
-    root /srv/aliblog
-}
-```
-
 第一个v是映射证书文件夹
 
 第二个v是映射配置
 
 第三个v是映射站点根文件夹，类似apache的RootDocument
 
-暴露端口80
+实际上端口暴露443即可
+
+此docker中/srv路径是站点根目录，类似于Apache的DocumentRoot。而这里我们把当前路径绑定到/srv中。
+
+root的值其实是相对于DocumentRoot的。
+
+假设我的当前路径有两个文件夹分别对应两个网站，一个是aliblog，一个是cdn。
+
+运行上面的docker命令配合下面的Caddyfile配置即可完成同一主机两个站点。
+
+```
+luochuanyuewu.com {
+    root /srv/aliblog
+}
+
+cdn.luochuanyuewu.com {
+    root /srv/cdn
+}
+```
+
